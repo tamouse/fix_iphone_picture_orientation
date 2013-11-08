@@ -8,32 +8,41 @@ class App
   include Methadone::Main
   include Methadone::CLILogging
 
-  main do # Add args you want: |like,so|
-    # your program code here
-    # You can access CLI options via
-    # the options Hash
+  main do |directory|
+    logger.level=Logger::WARN if options[:quiet]
+    logger.error_level = Logger::DEBUG if options[:debug]
+
+    directory ||= Dir.pwd
+    
+    FixIphonePictureOrientation.run(dir) or
+      warn "Not all files processed"
+
   end
 
   # supplemental methods here
 
   # Declare command-line interface here
 
-  # description "one line description of your app"
-  #
+  description "Fix iPhone photos with bad orientations"
+
   # Accept flags via:
   # on("--flag VAL","Some flag")
   # options[flag] will contain VAL
   #
   # Specify switches via:
   # on("--[no-]switch","Some switch")
-  #
+  on("--quiet","Run silently unless there are errors")
+  on("--debug","Turn on debugging info")
+
+
   # Or, just call OptionParser methods on opts
   #
   # Require an argument
   # arg :some_arg 
-  #
+
   # # Make an argument optional
   # arg :optional_arg, :optional
+  arg :directory,:optional, "Directory to run conversion upon.","Default is current directory."
 
   version FixIphonePictureOrientation::VERSION
 

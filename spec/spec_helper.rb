@@ -13,5 +13,13 @@ RSpec.configure do |config|
   # order dependency and want to debug it, you can fix the order by providing
   # the seed, which is printed after each run.
   #     --seed 1234
-  config.order = 'random'
+  # config.order = 'random'
+end
+
+require 'methadone'
+
+require 'fix_iphone_picture_orientation'
+module FixIphoneOrientation
+  extend Methadone::CLILogging
+  logger.error_level = Logger::DEBUG
 end
