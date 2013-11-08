@@ -14,7 +14,7 @@ class App
 
     directory ||= Dir.pwd
     
-    FixIphonePictureOrientation.run(dir) or
+    FixIphonePictureOrientation.run(directory) or
       warn "Not all files processed"
 
   end
